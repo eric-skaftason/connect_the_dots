@@ -31,7 +31,7 @@ class Renderer {
     }
 
     getPixelStreamIndexbyXY(x, y) {
-
+        return y * this.width + x;
     }
 
     getXYByPixelStreamIndex(index) {
@@ -52,16 +52,16 @@ class Renderer {
     }
 
     generatePixelStream(spline) {
-        let pixel_stream = this.generateSolidPixelStreamRGB(this.style.bg_colour);
+        let pixel_stream = this.generateSolidPixelStreamRGB(...this.style_config.bg_colour);
 
         const nodes = spline.getNodes();
 
         for (const node of nodes) {
-            min_x = node.x - this.style_config.node_rendered_radius;
-            min_y = node.y - this.style_config.node_rendered_radius;
+            let min_x = node.x - this.style_config.node_rendered_radius;
+            let min_y = node.y - this.style_config.node_rendered_radius;
 
-            max_x = node.x + this.style_config.node_rendered_radius;
-            max_y = node.y + this.style_config.node_rendered_radius;
+            let max_x = node.x + this.style_config.node_rendered_radius;
+            let max_y = node.y + this.style_config.node_rendered_radius;
 
             if (min_x < 0) min_x = 0;
             if (min_y < 0) min_y = 0;
@@ -70,12 +70,20 @@ class Renderer {
             if (max_y >= this.width) max_y = this.height - 1;
 
             // iterate through pixels to fill
-            for (let i = min_x; i <= max_x; i++) {
-                for (let i = min_x; i <= max_x; i++) {
-                    
+
+            for (let x = min_x; x <= max_x; x++) {
+                for (let y = min_y; y <= max_y; y++) {
+                    const stream_index = this.getPixelStreamIndexbyXY(x, y);
+
+                    pixel_stream[stream_index] = this.style_config.node_colour;
+
+
+                    px_filled++;
                 }
             }
         }
+
+        return pixel_stream;
     }
 
     render(pixel_stream) {

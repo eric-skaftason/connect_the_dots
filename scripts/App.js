@@ -32,7 +32,8 @@ class App {
             console.log(hitNode);
         }
 
-        // this.renderer.render();
+        const pixel_stream = this.renderer.generatePixelStream(this.spline);
+        this.renderer.render(pixel_stream);
         
     }
 }
