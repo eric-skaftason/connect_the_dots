@@ -1,15 +1,9 @@
 :root {
     /* HTML UI styling */
     --bg-color: #1e1e24;
-    --ui-bg-color: #2a2b32;
     --ui-text-color: #f5f5f7;
     --button-accent: #ffb74d;
     
-    /* Colours for  renderer -> just listed here for now*/
-    --curve-color: #4fc3f7;
-    --node-color: #ffb74d;
-    --handle-color: #a8b2c1;
-    --tangent-line: rgba(168, 178, 193, 0.4);
 }
 
 * {
@@ -48,8 +42,10 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    box-sizing: border-box;
 }
 
 #canvas {
-    border: 1px solid white;
+    outline: 1px solid white;
 }

@@ -1,5 +1,21 @@
 class Renderer {    
-    constructor(canvas, width, height) {
+    constructor(canvas, width, height, style_config) {
+
+        const default_style_config = {
+            bg_colour: [42, 43, 50],
+            node_colour: [79, 195, 247],
+            line_colour: [255, 183, 77],
+            tangent_colour: [168, 178, 193],
+            handle_colour: [220, 224, 230],
+
+            node_rendered_radius: 5
+        }
+
+        this.style_config = {
+            ...default_style_config,
+            ...style_config
+        };
+
         this.canvas = canvas;
         this.ctx = canvas.getContext("2d");
         this.width = width;
@@ -14,11 +30,52 @@ class Renderer {
         
     }
 
+    getPixelStreamIndexbyXY(x, y) {
+
+    }
+
     getXYByPixelStreamIndex(index) {
         const x = index % this.width;
         const y = Math.floor(index / 400);
 
         return [x, y];
+    }
+
+    generateSolidPixelStreamRGB(r, g, b) {
+        let pixel_stream = [];
+        for (let i = 0; i < 400 * 400; i++) {
+            const rgb = [r, g, b];
+            pixel_stream.push(rgb);
+        }
+
+        return pixel_stream;
+    }
+
+    generatePixelStream(spline) {
+        let pixel_stream = this.generateSolidPixelStreamRGB(this.style.bg_colour);
+
+        const nodes = spline.getNodes();
+
+        for (const node of nodes) {
+            min_x = node.x - this.style_config.node_rendered_radius;
+            min_y = node.y - this.style_config.node_rendered_radius;
+
+            max_x = node.x + this.style_config.node_rendered_radius;
+            max_y = node.y + this.style_config.node_rendered_radius;
+
+            if (min_x < 0) min_x = 0;
+            if (min_y < 0) min_y = 0;
+
+            if (max_x >= this.width) max_x = this.width - 1;
+            if (max_y >= this.width) max_y = this.height - 1;
+
+            // iterate through pixels to fill
+            for (let i = min_x; i <= max_x; i++) {
+                for (let i = min_x; i <= max_x; i++) {
+                    
+                }
+            }
+        }
     }
 
     render(pixel_stream) {
