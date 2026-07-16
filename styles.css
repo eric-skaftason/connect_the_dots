@@ -1,0 +1,55 @@
+:root {
+    /* HTML UI styling */
+    --bg-color: #1e1e24;
+    --ui-bg-color: #2a2b32;
+    --ui-text-color: #f5f5f7;
+    --button-accent: #ffb74d;
+    
+    /* Colours for  renderer -> just listed here for now*/
+    --curve-color: #4fc3f7;
+    --node-color: #ffb74d;
+    --handle-color: #a8b2c1;
+    --tangent-line: rgba(168, 178, 193, 0.4);
+}
+
+* {
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--ui-text-color)
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    background-color: var(--bg-color);
+}
+
+main {
+    margin: 20px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#title_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#title_container #title {
+    width: 100%;
+    text-align: center;
+}
+
+/* Demo window */
+
+.demo_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#canvas {
+    border: 1px solid white;
+}
