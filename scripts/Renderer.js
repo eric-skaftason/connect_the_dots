@@ -76,9 +76,6 @@ class Renderer {
                     const stream_index = this.getPixelStreamIndexbyXY(x, y);
 
                     pixel_stream[stream_index] = this.style_config.node_colour;
-
-
-                    px_filled++;
                 }
             }
         }
