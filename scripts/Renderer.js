@@ -69,13 +69,14 @@ class Renderer {
             if (max_x >= this.width) max_x = this.width - 1;
             if (max_y >= this.width) max_y = this.height - 1;
 
-            // iterate through pixels to fill
-
+            // Fill node; iterate through pixels to fill
             for (let x = min_x; x <= max_x; x++) {
                 for (let y = min_y; y <= max_y; y++) {
                     const stream_index = this.getPixelStreamIndexbyXY(x, y);
 
-                    pixel_stream[stream_index] = this.style_config.node_colour;
+                    const node_colour = node.selected ? this.style_config.highlight_colour : this.style_config.node_colour;
+
+                    pixel_stream[stream_index] = node_colour;
                 }
             }
         }

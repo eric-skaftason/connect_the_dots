@@ -25,7 +25,7 @@ class Input {
         this.onInput({
             type: "click",
             x: click_pos[0],
-            x: click_pos[1]
+            y: click_pos[1]
         });
 
 

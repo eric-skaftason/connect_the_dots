@@ -24,7 +24,7 @@ class Spline {
         for (let i = this.#nodes.length - 1; i >= 0; i--) {
             const node = this.#nodes[i];
 
-            if (Math.abs(node.x - x) <= this.nodeHitboxRadius && Math.abs(node.y - y) <= this.nodeHitboxRadius) return node;
+            if (Math.abs(x - node.x) <= this.nodeHitboxRadius && Math.abs(y - node.y) <= this.nodeHitboxRadius) return node;
         }
 
         return null;
@@ -32,6 +32,20 @@ class Spline {
 
     getNodes() {
         return this.#nodes;
+    }
+
+    getSelectedNode() {
+        for (const node of this.#nodes) {
+            if (node.selected === true) return node;
+        }
+
+        return null;
+    }
+
+    deselectAllNodes() {
+        for (const node of this.#nodes) {
+            node.selected = false;
+        }
     }
 
     // return an array with coordinate points to fill when rendering
