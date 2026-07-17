@@ -19,7 +19,7 @@ class Spline {
         this.enforce_function_mapping = true; // prevents multiple nodes per one x-value
         this.max_x_shift = 2; // max shift in +/- x direction to search for a valid space if the x value of a proposed new node is invalid
 
-        this.initDebugNodes();
+        // this.initDebugNodes();
     }
 
     initDebugNodes() {
@@ -77,6 +77,8 @@ class Spline {
 
         const node = new Node(x, y);
         this.#nodes.push(node);
+
+        this.sortByXValues();
     }
 
     moveNode(node, x, y) {
@@ -133,10 +135,35 @@ class Spline {
         node2.connections.push({to: node1, type: "linear"});
     }
 
-    // return an array with coordinate points to fill when rendering
-    getSplineData() {
+    
+    sortByXValues() {
+        let continue_loop = true;
 
+        do {
+            continue_loop = false;
+            for (let i = 1; i < this.#nodes.length; i++) {
+                const node2 = this.#nodes[i];
+
+                const node1 = this.#nodes[i - 1];
+
+                if (node1.x > node2.x) {
+                    // swap nodes to make node 1 go after node 2
+                    this.#nodes[i - 1] = node2;
+                    this.#nodes[i] = node1;
+                    
+                    continue_loop = true;
+                }
+            }
+        } while (continue_loop);
+        
     }
+
+    connectLinear() {
+        for (let i = 0; i < this.#nodes.length - 1; i++) {
+            this.connectNodes(this.#nodes[i], this.#nodes[i+1]);
+        }
+    }
+
 }
 
 

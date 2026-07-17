@@ -59,6 +59,12 @@ class App {
         });
 
 
+        // Line connections
+        document.querySelector("#linear").addEventListener('click', () => {
+            this.spline.connectLinear();
+            this.render();
+        });
+
         
     }
 
