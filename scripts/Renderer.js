@@ -118,18 +118,24 @@ class Renderer {
         // Apply overlay
 
         if (overlay === "polynomial") {
+            if (nodes.length > 6) return alert('Maximum nodes for Lagrange Polynomial Interpolation: 6');
             const points = Compute.generatePolynomialPoints(nodes);
-
-            console.log(points)
 
             for (const point of points) {
                 const stream_index = this.getPixelStreamIndexByXY(...point);
+                if (stream_index < 0 || stream_index >= this.width * this.height) continue;
+
                 pixel_stream[stream_index] = this.style_config.line_colour;
             }
         }
 
 
         return pixel_stream;
+    }
+
+    isWithinBounds(x, y) {
+        if (x >= this.width || y >= this.height || x < 0 || y < 0) return false;
+        return true;
     }
 
     render(pixel_stream) {
