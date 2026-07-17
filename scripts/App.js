@@ -14,13 +14,45 @@ class App {
 
         const scale_factor = 2;
 
+        const width = 400;
+        const height = 300;
+
+        document.querySelector(".demo_wrapper").style.width = `${width * scale_factor}px`;
+
+        this.click_mode = "default";
 
         this.canvas = document.querySelector('#canvas');
         this.spline = new Spline();
-        this.renderer = new Renderer(canvas, 400, 300, scale_factor, style_config);
+        this.renderer = new Renderer(canvas, width, height, scale_factor, style_config);
         this.input = new Input(this.canvas, scale_factor, (data) => this.onInput(data));
 
         this.renderer.render(this.renderer.generateSolidPixelStreamRGB(42, 43, 50));
+
+        this.initMenu();
+    }
+
+    render() {
+        const pixel_stream = this.renderer.generatePixelStream(this.spline);
+        this.renderer.render(pixel_stream);
+    }
+
+    initMenu() {
+        document.querySelector("#render").addEventListener('click', () => {
+            this.render();
+        });
+
+        const addNodeEle = document.querySelector("#add_node");
+        addNodeEle.addEventListener('click', () => {
+            if (addNodeEle.classList.contains('selected')) {
+                addNodeEle.classList.remove('selected');
+                this.click_mode = "default";
+            } else {
+                addNodeEle.classList.add('selected');
+                this.click_mode = "add_node"
+            }
+        });
+
+        
     }
 
 
@@ -36,10 +68,25 @@ class App {
             
             this.spline.deselectAllNodes();
 
-            const pixel_stream = this.renderer.generatePixelStream(this.spline);
-            this.renderer.render(pixel_stream);
+            this.render();
             return;
         }
+
+        // Add node (if applicable)
+
+        if (this.click_mode === "add_node") {
+            this.spline.createNode(input_data.x, input_data.y);
+            this.render();
+
+            // Get out of add node mode
+            document.querySelector("#add_node").classList.remove('selected');
+            this.click_mode = "default";
+
+            return;
+        }
+
+
+        // Compute node selection
 
         // newly hit node (may be selected or deselected)
         const hitNode = this.spline.getLastNodeInHitbox(input_data.x, input_data.y);
@@ -50,8 +97,7 @@ class App {
             this.spline.deselectAllNodes();
         }
 
-        const pixel_stream = this.renderer.generatePixelStream(this.spline);
-        this.renderer.render(pixel_stream);
+        this.render();
         
     }
 }

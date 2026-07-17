@@ -2,8 +2,12 @@
     /* HTML UI styling */
     --bg-color: #1e1e24;
     --ui-text-color: #f5f5f7;
-    --button-accent: #ffb74d;
     
+    --button: #2d3139;
+    --button-hover: #373c46;
+    --button-active: #1b1c20;
+    --button-border-selected: #ff3355; 
+
 }
 
 * {
@@ -39,6 +43,14 @@ main {
 /* Demo window */
 
 .demo_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    box-sizing: border-box;
+}
+
+.demo_wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -48,4 +60,43 @@ main {
 
 #canvas {
     outline: 1px solid white;
+}
+
+
+/* Menu controls */
+
+.controls {
+    margin: 0;
+    width: 100%;
+    display: flex;
+
+    border: 1px solid white;
+}
+
+.controls button {
+    height: 60px;
+    box-sizing: border-box;
+    border: none;
+    margin: 0;
+
+    flex: 1;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    color: var(--ui-text-color);
+    background-color: var(--bg-color);
+}
+
+.controls button:hover {
+    background-color: var(--button-hover);
+}
+
+.controls button:active {
+    background-color: var(--button-active);
+}
+
+.controls button.selected {
+    border: 2px solid var(--button-border-selected);
 }

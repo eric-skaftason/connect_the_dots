@@ -23,7 +23,6 @@ class Input {
     onClick(event) {
         const click_pos = this.getXYFromEvent(event);
         
-        
         this.onInput({
             type: "click",
             x: click_pos[0],

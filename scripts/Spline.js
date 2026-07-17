@@ -29,6 +29,11 @@ class Spline {
         this.connectNodes(node1, node2, "linear");
     }
 
+    createNode(x, y) {
+        const node = new Node(x, y);
+        this.#nodes.push(node);
+    }
+
     // prioritise nodes added last 
     getLastNodeInHitbox(x, y) {
         if (this.#nodes.length === 0) return null;
