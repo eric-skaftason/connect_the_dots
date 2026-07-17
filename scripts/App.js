@@ -37,9 +37,11 @@ class App {
     }
 
     initMenu() {
+        /*
         document.querySelector("#render").addEventListener('click', () => {
             this.render();
         });
+        */
 
         const addNodeEle = document.querySelector("#add_node");
         addNodeEle.addEventListener('click', () => {
@@ -50,6 +52,16 @@ class App {
                 addNodeEle.classList.add('selected');
                 this.click_mode = "add_node"
             }
+        });
+
+        document.querySelector("#del_node").addEventListener('click', () => {
+            const selected_node = this.spline.getSelectedNode();
+
+            if (selected_node) {
+                this.spline.deleteNode(selected_node);
+                this.render();
+            }
+            
         });
 
 

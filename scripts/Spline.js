@@ -110,6 +110,22 @@ class Spline {
         return this.#nodes;
     }
 
+    deleteNode(node) {
+        const index = this.#nodes.indexOf(node);
+
+        for (let i = 0; i < this.#nodes.length; i++) {
+            for (const connection of this.#nodes[i].connections) {
+                if (connection.to === node) {
+                    const connection_index = this.#nodes[i].connections.indexOf(connection);
+
+                    this.#nodes[i].connections.splice(connection_index, 1);
+                }
+            }
+        }
+
+        this.#nodes.splice(index, 1);
+    }
+
     clear() {
         this.#nodes = [];
     }
