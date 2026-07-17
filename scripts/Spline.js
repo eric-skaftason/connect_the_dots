@@ -89,6 +89,8 @@ class Spline {
 
         node.x = x;
         node.y = y;
+
+        this.sortByXValues();
     }
 
     // prioritise nodes added last 
@@ -158,7 +160,15 @@ class Spline {
         
     }
 
+    clearConnections() {
+        for (let i = 0; i < this.#nodes.length; i++) {
+            this.#nodes[i].connections = [];
+        }
+    }
+
     connectLinear() {
+        this.clearConnections();
+
         for (let i = 0; i < this.#nodes.length - 1; i++) {
             this.connectNodes(this.#nodes[i], this.#nodes[i+1]);
         }
