@@ -12,10 +12,10 @@ class App {
             highlight_colour: [244, 67, 54]
         }
 
-        const scale_factor = 2;
+        const scale_factor = 4;
 
-        const width = 400;
-        const height = 300;
+        const width = 200;
+        const height = 150;
 
         document.querySelector(".demo_wrapper").style.width = `${width * scale_factor}px`;
 
@@ -52,6 +52,13 @@ class App {
             }
         });
 
+
+        document.querySelector("#clear").addEventListener('click', () => {
+            this.spline.clear();
+            this.render();
+        });
+
+
         
     }
 
@@ -63,8 +70,11 @@ class App {
     onClick(input_data) {
         const previously_selected_node = this.spline.getSelectedNode();
         if (previously_selected_node) {
-            previously_selected_node.x = input_data.x;
-            previously_selected_node.y = input_data.y;
+            // Move node
+            this.spline.moveNode(previously_selected_node, input_data.x, input_data.y);
+            
+            // previously_selected_node.x = input_data.x;
+            // previously_selected_node.y = input_data.y;
             
             this.spline.deselectAllNodes();
 

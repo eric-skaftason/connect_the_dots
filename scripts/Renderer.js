@@ -10,7 +10,7 @@ class Renderer {
             tangent_colour: [168, 178, 193],
             handle_colour: [220, 224, 230],
 
-            node_rendered_radius: 5
+            node_rendered_radius: 1
         }
 
         this.style_config = {

@@ -69,11 +69,32 @@ main {
     margin: 0;
     width: 100%;
     display: flex;
+    flex-direction: column;
 
     border: 1px solid white;
 }
 
-.controls button {
+.menu_row {
+    margin: 0;
+    width: 100%;
+    display: flex;
+}
+
+.controls p {
+    /* font-size: 20px; */
+    margin: 0;
+    margin-top: 10px;
+    height: 50px;
+    width: 100%;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* text-decoration: underline; */
+}
+
+.menu_row button {
     height: 60px;
     box-sizing: border-box;
     border: none;
@@ -89,14 +110,14 @@ main {
     background-color: var(--bg-color);
 }
 
-.controls button:hover {
+.menu_row button:hover {
     background-color: var(--button-hover);
 }
 
-.controls button:active {
+.menu_row button:active {
     background-color: var(--button-active);
 }
 
-.controls button.selected {
+.menu_row button.selected {
     border: 2px solid var(--button-border-selected);
 }

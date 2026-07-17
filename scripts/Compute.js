@@ -47,6 +47,8 @@ class Compute {
 
         return points;
     }
+
+    static
 }
 
 export { Compute };
