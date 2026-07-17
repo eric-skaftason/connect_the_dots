@@ -12,11 +12,13 @@ class App {
             highlight_colour: [244, 67, 54]
         }
 
+        const scale_factor = 2;
+
 
         this.canvas = document.querySelector('#canvas');
         this.spline = new Spline();
-        this.renderer = new Renderer(canvas, 400, 400, style_config);
-        this.input = new Input(this.canvas, (data) => this.onInput(data));
+        this.renderer = new Renderer(canvas, 400, 300, scale_factor, style_config);
+        this.input = new Input(this.canvas, scale_factor, (data) => this.onInput(data));
 
         this.renderer.render(this.renderer.generateSolidPixelStreamRGB(42, 43, 50));
     }

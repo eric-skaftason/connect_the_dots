@@ -1,5 +1,12 @@
 class Node {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
 
+        this.selected = false;
+
+        this.connections = [];
+    }
 }
 
 class Spline {
@@ -13,11 +20,16 @@ class Spline {
     }
 
     initDebugNodes() {
-        this.#nodes.push({x: 59, y: 99, selected: false});
-        this.#nodes.push({x: 159, y: 299, selected: false});
+        const node1 = new Node(59, 99);
+        this.#nodes.push(node1);
+
+        const node2 = new Node(159, 109);
+        this.#nodes.push(node2);
+
+        this.connectNodes(node1, node2, "linear");
     }
 
-    // prioritise nodes added last
+    // prioritise nodes added last 
     getLastNodeInHitbox(x, y) {
         if (this.#nodes.length === 0) return null;
         
@@ -46,6 +58,11 @@ class Spline {
         for (const node of this.#nodes) {
             node.selected = false;
         }
+    }
+
+    connectNodes(node1, node2) {        
+        node1.connections.push({to: node2, type: "linear"});
+        node2.connections.push({to: node1, type: "linear"});
     }
 
     // return an array with coordinate points to fill when rendering

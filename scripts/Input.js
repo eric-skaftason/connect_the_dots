@@ -1,6 +1,8 @@
 class Input {
-    constructor(canvas, onInput) {
+    constructor(canvas, scale_factor, onInput) {
         this.canvas = canvas;
+
+        this.scale_factor = scale_factor;
 
         // callback function
         this.onInput = onInput;
@@ -11,8 +13,8 @@ class Input {
     getXYFromEvent(event) {
         const rect = this.canvas.getBoundingClientRect();
 
-        const canvas_x = event.clientX - rect.left;
-        const canvas_y = event.clientY - rect.top;
+        const canvas_x = (event.clientX - rect.left) / this.scale_factor;
+        const canvas_y = (event.clientY - rect.top) / this.scale_factor;
 
         return [Math.floor(canvas_x), Math.floor(canvas_y)];
     }
