@@ -31,8 +31,8 @@ class App {
         this.initMenu();
     }
 
-    render() {
-        const pixel_stream = this.renderer.generatePixelStream(this.spline);
+    render(overlay) {
+        const pixel_stream = this.renderer.generatePixelStream(this.spline, overlay);
         this.renderer.render(pixel_stream);
     }
 
@@ -76,6 +76,12 @@ class App {
             this.spline.connectLinear();
             this.render();
         });
+
+        document.querySelector("#polynomial").addEventListener('click', () => {
+            this.spline.clearConnections();
+            this.render("polynomial");
+        });
+
 
         
     }

@@ -144,8 +144,8 @@ class Spline {
         }
     }
 
-    connectNodes(node1, node2) {        
-        node1.connections.push({to: node2, type: "linear"});
+    connectNodes(node1, node2, type = "linear") {        
+        node1.connections.push({to: node2, type: type});
     }
 
     connectNodesMutually(node1, node2) {        

@@ -1,4 +1,27 @@
 class Compute {
+    static #lagrangeInterpolation(points, sample_x) {
+        // e.g. points = [[2, 4], [88, 97], [103, 37], ...]
+
+        const n = points.length;
+        let sum = 0;
+
+        for (let i = 1; i < n; i++) {
+            let term_i = points[i].y;
+
+            const xi = points[i].x;
+
+            for (let j = 0; j < n; j++) {
+                const xj = points[j].x;
+
+                if (j !== i) term_i = term_i * (sample_x - xj) / (xi - xj);
+            }
+
+            sum += term_i;
+        }
+
+        return sum;
+    }
+
     static lerp([start_x, start_y, end_x, end_y], sample_x) {
         const dx = end_x - start_x;
         const dy = end_y - start_y;
@@ -48,7 +71,24 @@ class Compute {
         return points;
     }
 
-    static
+    // given_nodes must be ordered by x-value
+    static generatePolynomialPoints(given_nodes) {
+        if (given_nodes.length === 0) return [];
+
+        const min_x = given_nodes[0].x;
+        const max_x = given_nodes[given_nodes.length - 1].x;
+
+        let points = [];
+
+        for (let sample_x = min_x; sample_x <= max_x; sample_x++) {
+            const y = Math.round(this.#lagrangeInterpolation(given_nodes, sample_x));
+
+            points.push([sample_x, y]);
+        }
+
+        return points;
+    }
+
 }
 
 export { Compute };

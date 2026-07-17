@@ -58,7 +58,7 @@ class Renderer {
         return pixel_stream;
     }
 
-    generatePixelStream(spline) {
+    generatePixelStream(spline, overlay) {
         let pixel_stream = this.generateSolidPixelStreamRGB(...this.style_config.bg_colour);
 
         const nodes = spline.getNodes();
@@ -114,7 +114,20 @@ class Renderer {
 
         }
 
-        // 
+
+        // Apply overlay
+
+        if (overlay === "polynomial") {
+            const points = Compute.generatePolynomialPoints(nodes);
+
+            console.log(points)
+
+            for (const point of points) {
+                const stream_index = this.getPixelStreamIndexByXY(...point);
+                pixel_stream[stream_index] = this.style_config.line_colour;
+            }
+        }
+
 
         return pixel_stream;
     }
