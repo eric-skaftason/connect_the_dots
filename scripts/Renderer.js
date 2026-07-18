@@ -121,12 +121,24 @@ class Renderer {
             if (nodes.length > 6) return alert('Maximum nodes for Lagrange Polynomial Interpolation: 6');
             const points = Compute.generatePolynomialPoints(nodes);
 
-            for (const point of points) {
-                const stream_index = this.getPixelStreamIndexByXY(...point);
-                if (stream_index < 0 || stream_index >= this.width * this.height) continue;
+            if (points.length === 0) return;
 
-                pixel_stream[stream_index] = this.style_config.line_colour;
+            for (let i = 0; i < points.length - 1; i++) {
+                const [x1, y1] = points[i]; // current point
+                const [x2, y2] = points[i + 1]; // next point
+
+                // Generate line to fill large vertical gaps
+                const line_points = Compute.generateLinePoints(x1, y1, x2, y2);
+                
+                for (const [lx, ly] of line_points) {
+                    if (lx >= 0 && lx < this.width && ly >= 0 && ly < this.height) {
+                        const stream_index = this.getPixelStreamIndexByXY(lx, ly);
+                        pixel_stream[stream_index] = this.style_config.line_colour;
+                    }
+                }
             }
+
+            
         }
 
 
