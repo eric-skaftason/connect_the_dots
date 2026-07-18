@@ -82,6 +82,11 @@ class App {
             this.render("polynomial");
         });
 
+        document.querySelector("#cosine").addEventListener('click', () => {
+            this.spline.connectCosine();
+            this.render();
+        });
+
 
         
     }

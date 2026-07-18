@@ -190,6 +190,14 @@ class Spline {
         }
     }
 
+    connectCosine() {
+        this.clearConnections();
+
+        for (let i = 0; i < this.#nodes.length - 1; i++) {
+            this.connectNodes(this.#nodes[i], this.#nodes[i+1], "cosine");
+        }
+    }
+
 }
 
 

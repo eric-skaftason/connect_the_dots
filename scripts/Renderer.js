@@ -82,25 +82,38 @@ class Renderer {
             for (const connection of node.connections) {
                 if (connection.type === "linear") {
                     const connected_node = connection.to;
-                    
-                    // Check if line is vertical
-                    if (connected_node.x === node.x) {
-                        for (let y = connected_node.y; y <= node.y; y++) {
-                            const stream_index = this.getPixelStreamIndexByXY(node.x, y);
-                            pixel_stream[stream_index] = this.style_config.line_colour;
-                        }
-                    } else {
-                        const line_points = Compute.generateLinePoints(connected_node.x, connected_node.y, node.x, node.y);
 
-                        for (const point of line_points) {
-                            const stream_index = this.getPixelStreamIndexByXY(...point);
-                            pixel_stream[stream_index] = this.style_config.line_colour;
-                        }
-                        
+                    const line_points = Compute.generateLinePoints(connected_node.x, connected_node.y, node.x, node.y);
+
+                    for (const point of line_points) {
+                        const stream_index = this.getPixelStreamIndexByXY(...point);
+                        pixel_stream[stream_index] = this.style_config.line_colour;
                     }
+                        
+                    
+                } else if (connection.type === "cosine") {
+                    const connected_node = connection.to;
+
+                    const points = Compute.generateCosineInterpolationPoints(node.x, node.y, connected_node.x, connected_node.y);
+
+                    for (let i = 0; i < points.length - 1; i++) {
+                        const [x1, y1] = points[i]; // current point
+                        const [x2, y2] = points[i + 1]; // next point
+
+                        // Generate line to fill large vertical gaps
+                        const line_points = Compute.generateLinePoints(x1, y1, x2, y2);
+                        
+                        for (const [lx, ly] of line_points) {
+                            if (lx >= 0 && lx < this.width && ly >= 0 && ly < this.height) {
+                                const stream_index = this.getPixelStreamIndexByXY(lx, ly);
+                                pixel_stream[stream_index] = this.style_config.line_colour;
+                            }
+                        }
+                    }
+                        
+                }
 
                     
-                }
             }
 
             // Fill node; iterate through pixels to fill

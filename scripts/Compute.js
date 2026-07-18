@@ -89,6 +89,27 @@ class Compute {
         return points;
     }
 
+
+    static generateCosineInterpolationPoints(x1, y1, x2, y2) {
+        // mu = interpolation factor [0, 1] -> how close to each end
+
+        let points = [];
+
+        const dx_total = x2 - x1;
+
+        for (let sample_x = x1; sample_x <= x2; sample_x++) {
+
+            const dx = x2 - sample_x;
+            const mu = 1 - dx / dx_total
+
+            const y = y1 + (y2 - y1) * (1 - Math.cos(Math.PI * mu)) / 2;
+
+            points.push([sample_x, Math.round(y)]);
+        }
+
+        return points;
+    }
+
 }
 
 export { Compute };
